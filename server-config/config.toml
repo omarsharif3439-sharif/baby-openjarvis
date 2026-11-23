@@ -1,0 +1,22 @@
+# Baby — Bangla chat config for OpenJarvis (Android starter)
+# এই ফাইলটা OpenJarvis-এর config হিসেবে বসান:
+#   Linux/Mac:  ~/.openjarvis/config.toml
+#   Windows:    %USERPROFILE%\.openjarvis\config.toml
+#
+# ভিত্তি: configs/openjarvis/examples/chat-simple.toml
+# বদল: সার্ভার যাতে ফোন থেকে পাওয়া যায় (host 0.0.0.0),
+#       আর ছোট ও দ্রুত Qwen মডেল — ক্লাউড/সাধারণ কম্পিউটারের জন্য উপযোগী।
+
+[engine]
+default = "ollama"
+
+[intelligence]
+default_model = "qwen3.5:4b"       # ছোট ও দ্রুত — শুরু করার জন্য ভালো
+# default_model = "qwen3.5:9b"     # শক্তিশালী কম্পিউটার/ক্লাউড থাকলে এটা চালু করুন
+
+[agent]
+default_agent = "simple"            # সাধারণ চ্যাট, কোনো টুল ছাড়া
+
+[server]
+host = "0.0.0.0"                    # ফোন/অন্য ডিভাইস থেকে যুক্ত হওয়ার জন্য জরুরি
+port = 8000
