@@ -1,9 +1,14 @@
 package com.sharif.baby
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 /**
@@ -37,6 +42,37 @@ class MainActivity : AppCompatActivity() {
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
         webView.loadUrl(SERVER_URL)
+
+        val phoneInput = findViewById<EditText>(R.id.phone_number)
+
+        // ফোন কল করার জন্য — নম্বর বসানো ডায়ালার খুলবে;
+        // কল শুরু করতে ডায়ালারের কল বাটনটা নিজে চাপতে হবে।
+        findViewById<Button>(R.id.btn_call).setOnClickListener {
+            val number = phoneInput.text.toString().trim()
+            if (number.isEmpty()) {
+                Toast.makeText(this, "আগে মোবাইল নম্বর লেখো", Toast.LENGTH_SHORT).show()
+            } else {
+                val intent = Intent(Intent.ACTION_DIAL).apply {
+                    data = Uri.parse("tel:$number")
+                }
+                startActivity(intent)
+            }
+        }
+
+        // মেসেজ পাঠানোর জন্য — নম্বর বসানো মেসেজ অ্যাপ খুলবে;
+        // লিখে পাঠানোর বাটনটা নিজে চাপতে হবে।
+        findViewById<Button>(R.id.btn_sms).setOnClickListener {
+            val number = phoneInput.text.toString().trim()
+            if (number.isEmpty()) {
+                Toast.makeText(this, "আগে মোবাইল নম্বর লেখো", Toast.LENGTH_SHORT).show()
+            } else {
+                val sendIntent = Intent(Intent.ACTION_VIEW).apply {
+                    data = Uri.parse("smsto:$number")
+                    putExtra("sms_body", "")
+                }
+                startActivity(sendIntent)
+            }
+        }
     }
 
     override fun onBackPressed() {
